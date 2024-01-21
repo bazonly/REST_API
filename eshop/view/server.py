@@ -1,7 +1,7 @@
 from flask import Flask, request
 from marshmallow import ValidationError
 
-from eshop.businsess_logic.order_usecases import order_create, order_get_many, order_get_by_id
+from eshop.businsess_logic.order_usecases import order_create, order_get_many, order_get_by_id, order_delete
 from eshop.businsess_logic.product import Product
 from eshop.businsess_logic.product_usecases import product_create, product_get_by_id, product_get_many, product_delete
 from eshop.view.order_schemas import OrderCreateDtoSchema, OrderSchema, OrderGetManyParams
@@ -109,6 +109,16 @@ def products_delete_by_id_endpoint(id):
     product_delete(id)
     return {'success': f'product with id {id} delete'}
 
+@app.delete("/api/v1/order/<id>")
+def order_delete_by_id_endpoint(id):
+    order = order_get_by_id(id)
+
+    if order is None:
+        return {
+            "error": 'Not found'
+        }, 404
+    order_delete(id)
+    return {'success': f'order with id {id} delete'}
 
 def run_server():
     app.run()

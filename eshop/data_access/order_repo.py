@@ -18,6 +18,9 @@ def save(order: Order):
 def get_by_id(id: str) -> Optional[Order]:
     return next((o for o in _orders if o.id == id), None)
 
+def delete_by_id(id: str):
+    global _orders
+    _orders = [p for p in _orders if p.id != id]
 
 def get_many(page: int = 0, limit: int = 10):
     start = page * limit

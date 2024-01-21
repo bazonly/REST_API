@@ -2,7 +2,7 @@ import uuid
 from typing import List, Optional
 
 from eshop.businsess_logic.order import Order
-from eshop.data_access.order_repo import save, get_by_id, get_many
+from eshop.data_access.order_repo import save, get_by_id, get_many, delete_by_id
 from eshop.data_access.product_repo import get_by_id as product_get_by_id
 
 
@@ -30,6 +30,8 @@ def order_create(product_ids: List[str]):
 def order_get_by_id(id: str) -> Optional[Order]:
     return get_by_id(id)
 
+def order_delete(id: str):
+    delete_by_id(id)
 
 def order_get_many(page: int, limit: int) -> List[Order]:
     return get_many(page=page, limit=limit)
